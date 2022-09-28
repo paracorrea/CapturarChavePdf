@@ -21,9 +21,9 @@ public class ReadFilesWithPdfBox {
 	
 	public static void findAllFiles(String file ) throws IOException {
 		
-		File file1 = new File(file);
+		//File file1 = new File(file);
 		
-		FileInputStream stream = new FileInputStream(file1);
+		FileInputStream stream = new FileInputStream(file);
 		InputStreamReader reader = new InputStreamReader(stream);
 		
 		try (BufferedReader br = new BufferedReader(reader)) {
@@ -39,10 +39,12 @@ public class ReadFilesWithPdfBox {
 				
 			    System.out.println("primeiro PDF = "+linha);
 			    
-			    
+			    File file1 = new File(linha);
+				if (!file1.isFile()) {
+					linha = br.readLine();
+				}
 				
-				 PDFParser parser = new PDFParser(new
-				 RandomAccessBufferedFileInputStream(linha)); 
+				 PDFParser parser = new PDFParser(new RandomAccessBufferedFileInputStream(linha)); 
 				 parser.parse(); 
 				 COSDocument cosDoc = parser.getDocument(); 
 				 PDFTextStripper pdfStripper = new PDFTextStripper(); 
@@ -55,7 +57,8 @@ public class ReadFilesWithPdfBox {
 				 
 				  }
 				 linha = br.readLine();
-			    
+				 cosDoc.close();
+				 pdDoc.close();
 			}
 		}
 		
