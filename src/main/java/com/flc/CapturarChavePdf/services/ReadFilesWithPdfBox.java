@@ -27,27 +27,34 @@ public class ReadFilesWithPdfBox {
 		InputStreamReader reader = new InputStreamReader(stream);
 		
 		try (BufferedReader br = new BufferedReader(reader)) {
+			
+			//String linha ="";
 			String linha = br.readLine();
 			
 
 			while(linha != null) {
 			   // LOG.info("Linha capturada: "+linha);
-			    linha = br.readLine();
+			   
+				
+				
+			    System.out.println("primeiro PDF = "+linha);
 			    
-			    System.out.println("primeiro PDF = "+linha.toString());
-			    PDFParser parser = new PDFParser(new RandomAccessBufferedFileInputStream(linha));
-	            parser.parse();
-	            COSDocument cosDoc = parser.getDocument();
-	            PDFTextStripper pdfStripper = new PDFTextStripper();
-	            PDDocument pdDoc = new PDDocument(cosDoc);
-	            for (int i = 1; i <= pdDoc.getNumberOfPages(); i++) {
-	                pdfStripper.setStartPage(i);
-	                pdfStripper.setEndPage(i);
-	                String parsedText = pdfStripper.getText(pdDoc);
-	                System.out.println("Página " + i + ": " + parsedText);
 			    
-	            }
-			    
+				
+				 PDFParser parser = new PDFParser(new
+				 RandomAccessBufferedFileInputStream(linha)); 
+				 parser.parse(); 
+				 COSDocument cosDoc = parser.getDocument(); 
+				 PDFTextStripper pdfStripper = new PDFTextStripper(); 
+				 PDDocument pdDoc = new PDDocument(cosDoc); 
+				 for (int i = 1;i <= pdDoc.getNumberOfPages(); i++) { 
+					 pdfStripper.setStartPage(i);
+					 pdfStripper.setEndPage(i);
+					 String parsedText = pdfStripper.getText(pdDoc);
+					 System.out.println("Página " + i + ": " + parsedText);
+				 
+				  }
+				 linha = br.readLine();
 			    
 			}
 		}
