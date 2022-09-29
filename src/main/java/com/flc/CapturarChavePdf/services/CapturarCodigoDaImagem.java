@@ -2,18 +2,11 @@ package com.flc.CapturarChavePdf.services;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-
 import javax.imageio.ImageIO;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -31,7 +24,7 @@ public class CapturarCodigoDaImagem {
 
 	public static void main(String[] args) {
 		
-		File fimage = new File("C:\\Users\\boleto verde 03\\Desktop\\imagem01.jpg");
+		File fimage = new File("C:\\tempor\\2022.01-05 a 07.01 - Unimax-8.png");
 		BufferedImage bufImage;
 		try {
 			bufImage = ImageIO.read(fimage);
@@ -43,11 +36,11 @@ public class CapturarCodigoDaImagem {
 			
 			Map<DecodeHintType,Object> tmpHintsMap = new EnumMap<DecodeHintType, Object>(DecodeHintType.class);
 	           tmpHintsMap.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
-	            tmpHintsMap.put(DecodeHintType.POSSIBLE_FORMATS, EnumSet.allOf(BarcodeFormat.class));
+	            //tmpHintsMap.put(DecodeHintType.POSSIBLE_FORMATS, EnumSet.allOf(BarcodeFormat.class));
 	           // tmpHintsMap.put(DecodeHintType.PURE_BARCODE, Boolean.FALSE);
 				Result result =  reader.decode(bitmap, tmpHintsMap);
 				
-				System.out.println(result.getText());
+				System.out.println(result.getText().toString());
 			} catch (NotFoundException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Código de barras não encontrado");
@@ -70,4 +63,4 @@ public class CapturarCodigoDaImagem {
 
 	}
 
-}
+
