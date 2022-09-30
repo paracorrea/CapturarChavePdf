@@ -32,13 +32,21 @@ public class CapturarCodigoDaImagem {
 			
 			BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 			Reader reader = new MultiFormatReader();
+			
+            if (bitmap.getWidth() < bitmap.getHeight()) {
+                if (bitmap.isRotateSupported()) {
+                    bitmap = bitmap.rotateCounterClockwise();
+                }
+            }
+			
+			
 			try {
 			
 			Map<DecodeHintType,Object> tmpHintsMap = new EnumMap<DecodeHintType, Object>(DecodeHintType.class);
 	           tmpHintsMap.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
-	            //tmpHintsMap.put(DecodeHintType.POSSIBLE_FORMATS, EnumSet.allOf(BarcodeFormat.class));
-	           // tmpHintsMap.put(DecodeHintType.PURE_BARCODE, Boolean.FALSE);
-				Result result =  reader.decode(bitmap, tmpHintsMap);
+	           tmpHintsMap.put(DecodeHintType.POSSIBLE_FORMATS, EnumSet.allOf(BarcodeFormat.class));
+	           tmpHintsMap.put(DecodeHintType.PURE_BARCODE, Boolean.FALSE);
+			   Result result =  reader.decode(bitmap, tmpHintsMap);
 				
 				System.out.println(result.getText().toString());
 			} catch (NotFoundException e) {
