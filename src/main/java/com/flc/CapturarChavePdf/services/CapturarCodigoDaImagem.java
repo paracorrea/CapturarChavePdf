@@ -24,7 +24,7 @@ public class CapturarCodigoDaImagem {
 
 	public static void main(String[] args) {
 		
-		File fimage = new File("C:\\tempor\\2022.01-05 a 07.01 - Unimax-8.png");
+		File fimage = new File("C:\\tempor\\2022.01-05 a 07.01 - Unimax-15.png");
 		BufferedImage bufImage;
 		try {
 			bufImage = ImageIO.read(fimage);
