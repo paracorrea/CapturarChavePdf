@@ -1,6 +1,6 @@
 package com.flc.CapturarChavePdf.services;
 
-
+// this is second program
 
 
 import java.awt.image.BufferedImage;
@@ -18,7 +18,7 @@ import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 public class ReadFilesWithPdfBox {
 
 	/*
-	 * this class ready the file output.txt and open the files pdf
+	 * this class ready the file output.txt and ready line per line opening the files pdf
 	 * composer a name file with initial string of name, folder and page of the pdf read. by sample:
 	
 		C:\folders\2022.01
@@ -29,8 +29,11 @@ public class ReadFilesWithPdfBox {
 		...
 	 
 	 * finally save every page like one image file and in another page
+	 * The final, by example, is "2022.01-05 a 07.01 - Unimax-1.png"
+	 * and next, if have another page: "2022.01-05 a 07.01 - Unimax-2.png"
 	 */
 
+	 	
 	
 	public static void findAllFiles(String file ) throws IOException {
 		
@@ -77,7 +80,7 @@ public class ReadFilesWithPdfBox {
 				// this code can upgrade for path get from string or another configuration
 				for (int page = 0; page < document.getNumberOfPages(); ++page) {
 			        BufferedImage bim = pdfRenderer.renderImageWithDPI(page, 300, ImageType.RGB);
-			        ImageIOUtil.writeImage(bim,String.format("c://tempor//%s-%d.%s",nomeArq, page + 1, extension), 300);
+			        ImageIOUtil.writeImage(bim,String.format("c://tempor1//%s-%d.%s",nomeArq, page + 1, extension), 300);
 			     }
 			    
 				document.close();
@@ -89,7 +92,8 @@ public class ReadFilesWithPdfBox {
 	} // {close method findAllFiles}
 	
 	public static void main(String[] args) throws IOException {
-			
+		
+		// output.txt is file and folder with name of files PDFs for make image files of each page 
 		String fileTxtWithNamesOfFiles = new String("C:\\folders\\output.txt");
 		findAllFiles(fileTxtWithNamesOfFiles);
 

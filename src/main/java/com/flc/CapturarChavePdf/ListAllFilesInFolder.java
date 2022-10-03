@@ -11,13 +11,32 @@ import java.util.List;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+//; This is initial program
+// This Class, ready all file and all folder in one folder initial, and save all names in the file output.txt
+
 
 
 @SpringBootApplication
-public class CapturarChavePdfApplication {
+public class ListAllFilesInFolder {
 
 	private static Path output = Paths.get("C:\\folders\\output.txt");
 	private static List<String> filesList = new ArrayList<>();
+	
+	
+	public static void main(String[] args) throws ParseException {
+		
+		// initial folder where are all folders and files
+		File folder = new File("C:\\folders");
+		
+		if (folder.exists()) {
+		
+				findAllFilesInFolder(folder);
+		}
+		
+		System.out.println("Pasta inexistente. Crie a pasta primeiro e copie os arquivos");
+		
+	}
+	
 	
 	public static void findAllFilesInFolder(File folder) {
 		
@@ -38,13 +57,10 @@ public class CapturarChavePdfApplication {
 	        Files.write(output, filesList);
 	        System.out.println(output.toFile().getAbsolutePath());
 	    } catch (Exception e) {
-	        e.printStackTrace();
+	        System.out.println("Erro ao gravar o arquivo: "+e);
 	    }
 	}
-	public static void main(String[] args) throws ParseException {
-		File folder = new File("C:\\folders");
-		findAllFilesInFolder(folder);
-	}
+
 }
 	
 

@@ -4,8 +4,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
@@ -22,10 +27,22 @@ import com.google.zxing.common.HybridBinarizer;
 
 public class CapturarCodigoDaImagem {
 
-	public static void main(String[] args) {
+	private static List<String> filesList = new ArrayList<>();
+	private static Path output = Paths.get("C:\\tempor1\\teste.txt");
+	
+	public static void main(String[] args) throws IOException {
 		
-		File fimage = new File("C:\\tempor\\2022.01-05 a 07.01 - Unimax-15.png");
+		File file = new File("C:\\tempor1");
+		
+		
+		for (File fimage : file.listFiles()) {
+		
+		
 		BufferedImage bufImage;
+		
+		
+		System.out.println("Arquivo encontrado foi: "+fimage.getName().toString());
+		
 		try {
 			bufImage = ImageIO.read(fimage);
 			LuminanceSource source = new BufferedImageLuminanceSource(bufImage);
@@ -42,13 +59,21 @@ public class CapturarCodigoDaImagem {
 			
 			try {
 			
+				
+				
 			Map<DecodeHintType,Object> tmpHintsMap = new EnumMap<DecodeHintType, Object>(DecodeHintType.class);
 	           tmpHintsMap.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
 	           tmpHintsMap.put(DecodeHintType.POSSIBLE_FORMATS, EnumSet.allOf(BarcodeFormat.class));
 	           tmpHintsMap.put(DecodeHintType.PURE_BARCODE, Boolean.FALSE);
 			   Result result =  reader.decode(bitmap, tmpHintsMap);
 				
-				System.out.println(result.getText().toString());
+			   System.out.println("Result: "+result.getText().toString());
+			   
+			   String nameFile=fimage.getName().toString();
+			   
+			   filesList.add(nameFile+"::"+result.getText().toString());
+			   System.out.println("Nome e chave completo "+nameFile+"::"+result.getText().toString());
+			   
 			} catch (NotFoundException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Código de barras não encontrado");
@@ -66,8 +91,20 @@ public class CapturarCodigoDaImagem {
 			e.printStackTrace();
 		}
 
+		
+			
 	}
-
+		
+	try {
+		Files.write(output, filesList);
+		System.out.println("Aqui passando"+output.toFile().getAbsolutePath());
+	 } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		
+		
+		
+	}
 
 	}
 
