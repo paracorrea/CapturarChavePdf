@@ -19,21 +19,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ListAllFilesInFolder {
 
-	private static Path output = Paths.get("C:\\folders\\output.txt");
+	private static Path output = Paths.get("C:\\folders\\init\\txts\\pdfs.txt");
 	private static List<String> filesList = new ArrayList<>();
 	
 	
 	public static void main(String[] args) throws ParseException {
 		
-		// initial folder where are all folders and files
-		File folder = new File("C:\\folders");
+		// initial folder where are all folders with pfds files
 		
-		if (folder.exists()) {
 		
-				findAllFilesInFolder(folder);
-		}
 		
-		System.out.println("Pasta inexistente. Crie a pasta primeiro e copie os arquivos");
+		File folder = new File("C:\\folders\\init\\pdfs");
+					
+		findAllFilesInFolder(folder);
+		
+		//System.out.println("Pasta inexistente. Crie a pasta primeiro e copie os arquivos");
 		
 	}
 	
@@ -54,6 +54,8 @@ public class ListAllFilesInFolder {
 		}
 		
 	    try {
+	    	
+	    	// files.write Write a file txt with all pdfs founds
 	        Files.write(output, filesList);
 	        System.out.println(output.toFile().getAbsolutePath());
 	    } catch (Exception e) {

@@ -9,6 +9,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -33,7 +39,8 @@ public class ReadFilesWithPdfBox {
 	 * and next, if have another page: "2022.01-05 a 07.01 - Unimax-2.png"
 	 */
 
-	 	
+		private static Path output = Paths.get("C:\\folders\\init\\txts\\imgs.txt");
+		private static List<String> filesList = new ArrayList<>();	 	
 	
 	public static void findAllFiles(String file ) throws IOException {
 		
@@ -41,7 +48,7 @@ public class ReadFilesWithPdfBox {
 		 * This method recive from main method a string contend full path of the "output.txt" file
 		 * in the file, your content need have a list of file. this method is called from main  
 		 */
-			
+
 		FileInputStream stream = new FileInputStream(file);
 		InputStreamReader reader = new InputStreamReader(stream);
 		
@@ -53,6 +60,7 @@ public class ReadFilesWithPdfBox {
 			String nomeDir ="";
 			String nomeArq ="";
 			int tamanhoNomeDir = 0;
+			//String nomeDirFull = ""; fileName.substring(0, 20);
 			
 			while(fileName != null) {
 						   
@@ -62,13 +70,13 @@ public class ReadFilesWithPdfBox {
 					
 					// if file not a file, is a folder. We need get name folder in nomeDir
 					fileName = br.readLine();
-					nomeDir = fileName.substring(11, 18);
+					nomeDir = fileName.substring(21, 28);
 					
 				}
 				
 				// here is verify file really is a file. So get the part of name plus name of folder
 				tamanhoNomeDir = (fileName.length())-4;
-				nomeArq=nomeDir+"-"+fileName.substring(19, tamanhoNomeDir);
+				nomeArq=nomeDir+"-"+fileName.substring(29, tamanhoNomeDir);
 				
 							 
 				PDDocument document = PDDocument.load(new File(fileName));
@@ -80,7 +88,9 @@ public class ReadFilesWithPdfBox {
 				// this code can upgrade for path get from string or another configuration
 				for (int page = 0; page < document.getNumberOfPages(); ++page) {
 			        BufferedImage bim = pdfRenderer.renderImageWithDPI(page, 300, ImageType.RGB);
-			        ImageIOUtil.writeImage(bim,String.format("c://tempor1//%s-%d.%s",nomeArq, page + 1, extension), 300);
+			        
+			        filesList.add(String.format("c://folders/init/imgs//%s-%d.%s",nomeArq, page + 1, extension));
+			        ImageIOUtil.writeImage(bim,String.format("c://folders/init/imgs//%s-%d.%s",nomeArq, page + 1, extension), 300);
 			     }
 			    
 				document.close();
@@ -88,13 +98,15 @@ public class ReadFilesWithPdfBox {
 				//next line of file
 				fileName = br.readLine();
 			} // {Close while}
+			//Files.write(output, filesList);
 		} // {close try}
+		Files.write(output, filesList);
 	} // {close method findAllFiles}
 	
 	public static void main(String[] args) throws IOException {
 		
 		// output.txt is file and folder with name of files PDFs for make image files of each page 
-		String fileTxtWithNamesOfFiles = new String("C:\\folders\\output.txt");
+		String fileTxtWithNamesOfFiles = new String("C:\\folders\\init\\txts\\pdfs.txt");
 		findAllFiles(fileTxtWithNamesOfFiles);
 
 	}
