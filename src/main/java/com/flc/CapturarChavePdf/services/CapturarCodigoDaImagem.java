@@ -5,12 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import javax.imageio.ImageIO;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -74,7 +69,7 @@ public class CapturarCodigoDaImagem {
 			while (fileName != null) {
 				
 				
-				nameFinal=fileName+"::";
+				nameFinal=fileName+";";
 				System.out.println(nameFinal);
 				getBarCode(fileName);
 				fileName = br.readLine();
@@ -124,6 +119,8 @@ public class CapturarCodigoDaImagem {
 			} 
 		}
   
+		
+		
 		try {
 			Map<DecodeHintType,Object> tmpHintsMap = new EnumMap<DecodeHintType, Object>(DecodeHintType.class); 
 			tmpHintsMap.put(DecodeHintType.TRY_HARDER, Boolean.TRUE); 
