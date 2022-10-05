@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -86,16 +88,39 @@ public class GetOcrOfImage {
 		
 		
 				
-		
+		String fileName=parte1;
 		File image = new File(parte1);
 		Tesseract tesseract = new Tesseract();
-		tesseract.setDatapath("C:\\folders\\init\\txts");
+		tesseract.setDatapath("C:\\Users\\fernando.correa\\AppData\\Local\\Tesseract-OCR\\tessdata");
 		tesseract.setLanguage("por");
 		tesseract.setPageSegMode(1);
 		tesseract.setOcrEngineMode(1);
 		String result = tesseract.doOCR(image);
-			
+		System.out.println("---------------------------------------------");
+		System.out.println("Nome do arquivo :"+fileName);
+		System.out.println("---------------------------------------------");
 		System.out.println(result);
+		String chave="\\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4}";
+		
+		String str1="NOTA FISCAL ELETRÔNICA";
+		String str2="CHAVE DE ACESSO";
+		String str3="NF-e";
+		
+		
+	   
+	    
+	    if (result.contains(str3)) { 
+	    	
+	    	System.out.println("*******************************************************");
+	    	System.out.println("*******************************************************");
+	    	System.out.println("Arquivo encontrado: "+fileName);
+	    	System.out.println("*******************************************************");
+	    	System.out.println("*******************************************************");
+	    	
+	    	
+	    }
+	   
+	       
 		}
 			
 			
