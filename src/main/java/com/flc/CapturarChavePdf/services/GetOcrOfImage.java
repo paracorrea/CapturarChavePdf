@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,13 +22,13 @@ import net.sourceforge.tess4j.TesseractException;
 public class GetOcrOfImage {
 
  static String imput = "C:\\folders\\init\\txts\\imgsAndKeys.txt";
- Path output = Paths.get("C:\\folders\\init\\txts\\ImgsAndKeysOcr.txt");
+ static Path output = Paths.get("C:\\folders\\init\\txts\\ImgsAndKeysOcr.txt");
  static String nameFinal ="";
  static String keyFinal="";
- List<String> filesList = new ArrayList<>();
+ static List<String> filesList = new ArrayList<>();
  String[] nomeNovo;	
 	
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		
 		String fileTxtWithNamesOfFiles = new String(imput);
 		getPartsOfFiles(fileTxtWithNamesOfFiles);
@@ -35,7 +36,7 @@ public class GetOcrOfImage {
 
 
 	
-	private static void getPartsOfFiles(String file) throws FileNotFoundException {
+	private static void getPartsOfFiles(String file) throws IOException {
 		
 		
 		FileInputStream stream = new FileInputStream(file);
@@ -61,7 +62,7 @@ public class GetOcrOfImage {
 				
 				
 				
-				
+				filesList.add(nameFinal+";"+keyFinal);
 				linha = br.readLine();
 				
 				
@@ -77,6 +78,8 @@ public class GetOcrOfImage {
 		}
 		
 		//getOcrFromImage(partes[0]);
+		
+		Files.write(output, filesList);
 	}
 	
 	
@@ -105,22 +108,21 @@ public class GetOcrOfImage {
 		String str1="NOTA FISCAL ELETRÔNICA";
 		String str2="CHAVE DE ACESSO";
 		String str3="NF-e";
-		
-		
-	   
-	    
+		String str4="NFS-e";
+;		
+		 
 	    if (result.contains(str3)) { 
 	    	
-	    	System.out.println("*******************************************************");
-	    	System.out.println("*******************************************************");
-	    	System.out.println("Arquivo encontrado: "+fileName);
-	    	System.out.println("*******************************************************");
-	    	System.out.println("*******************************************************");
+	    	keyFinal="Passível de identificação";
 	    	
 	    	
 	    }
-	   
-	       
+
+	    if (result.contentEquals(str4)) {
+	    	keyFinal="identificado NFS-e";
+	    }
+	    
+
 		}
 			
 			

@@ -110,6 +110,8 @@ public class CapturarCodigoDaImagem {
 		LuminanceSource source = new BufferedImageLuminanceSource(bufImage);
  	 
 		BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source)); 
+		
+		
 		Reader reader = new MultiFormatReader();
   
 		if (bitmap.getWidth() < bitmap.getHeight()) {
