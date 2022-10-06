@@ -11,8 +11,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -102,8 +104,37 @@ public class GetOcrOfImage {
 		System.out.println("---------------------------------------------");
 		System.out.println("Nome do arquivo :"+fileName);
 		System.out.println("---------------------------------------------");
-		System.out.println(result);
-		String chave="\\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4}";
+		//System.out.println(result);
+		
+		String nf[] = result.split("\n");
+		
+		for ( int i =0; i <nf.length; i++) {
+			String result1 = nf[i].toString().toUpperCase().replaceAll("\\s+","");
+			System.out.println("LInha: "+i+ ":" +result1+":");
+			
+			Pattern pattern = Pattern.compile("\\d{38,44}"); 
+			Matcher matcher = pattern.matcher(result1);
+			
+			if (matcher.find()) {
+				
+				
+		         MatchResult myResult = matcher.toMatchResult();
+				 int start = myResult.start();
+				 int end = myResult.end();
+				
+				System.out.println("*******************************************************");
+				System.out.println("*******************************************************");
+				String info ="Encontrada uma correspondência no arquivo: "+fileName;
+				System.out.println(info);
+				System.out.println("Foi capturado o código"+start+ "--"+end);
+				System.out.println("*******************************************************");
+				System.out.println("*******************************************************");
+			}
+				
+		}
+ 		
+		
+		/*String chave="\\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4}";
 		
 		String str1="NOTA FISCAL ELETRÔNICA";
 		String str2="CHAVE DE ACESSO";
@@ -124,10 +155,10 @@ public class GetOcrOfImage {
 	    
 
 		}
+			*/
 			
 			
-			
-
+	}
 	
 	
 	}
