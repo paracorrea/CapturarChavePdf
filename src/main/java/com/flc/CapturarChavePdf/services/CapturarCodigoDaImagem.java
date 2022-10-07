@@ -131,11 +131,14 @@ public class CapturarCodigoDaImagem {
 			
 			Result result = reader.decode(bitmap, tmpHintsMap);
   
-			System.out.println("Result: "+result.getText().toString());
+			String barCode = result.getText().toString();
+			//System.out.println("Result: "+result.getText().toString());
   
-			
+			if (barCode.length()<40) {
+				barCode="00000000000000000000000000000000000000000000";
+			}
   
-			filesList.add(nameFinal+result.getText().toString());
+			filesList.add(nameFinal+barCode);
 			
 			
 		}  catch (NotFoundException e) { 

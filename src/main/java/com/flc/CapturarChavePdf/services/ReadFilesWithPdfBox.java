@@ -24,7 +24,7 @@ import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 public class ReadFilesWithPdfBox {
 
 	/*
-	 * this class ready the file output.txt and ready line per line opening the files pdf
+	 * this class ready the file pdfs.txt and ready line per line opening the files pdf
 	 * composer a name file with initial string of name, folder and page of the pdf read. by sample:
 	
 		C:\folders\2022.01

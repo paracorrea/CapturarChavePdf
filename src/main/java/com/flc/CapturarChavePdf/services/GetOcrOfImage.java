@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
+
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -24,10 +24,11 @@ import net.sourceforge.tess4j.TesseractException;
 public class GetOcrOfImage {
 
  static String imput = "C:\\folders\\init\\txts\\imgsAndKeys.txt";
- static Path output = Paths.get("C:\\folders\\init\\txts\\ImgsAndKeysOcr.txt");
+ static Path output = Paths.get("C:\\folders\\init\\txts\\finalFile.txt");
  static String nameFinal ="";
  static String keyFinal="";
  static List<String> filesList = new ArrayList<>();
+ static Boolean status=true;
  String[] nomeNovo;	
 	
 	public static void main(String[] args) throws IOException {
@@ -52,8 +53,8 @@ public class GetOcrOfImage {
 				String[] partes = linha.split(";");
 				
 				nameFinal=partes[0];
-				keyFinal=partes[1];
 				
+			
 				if (partes[1].contains("00000000000000000000000000000000000000000000") || partes[1].length()<44 ) {
 					
 					
@@ -62,7 +63,9 @@ public class GetOcrOfImage {
 					
 				}
 				
-				
+				if (status) {
+					keyFinal=partes[1];
+				}
 				
 				filesList.add(nameFinal+";"+keyFinal);
 				linha = br.readLine();
@@ -107,56 +110,63 @@ public class GetOcrOfImage {
 		//System.out.println(result);
 		
 		String nf[] = result.split("\n");
-		
+		status=true;
 		for ( int i =0; i <nf.length; i++) {
 			String result1 = nf[i].toString().toUpperCase().replaceAll("\\s+","");
-			System.out.println("LInha: "+i+ ":" +result1+":");
+			//System.out.println("LInha: "+i+ ":" +result1+":");
 			
 			Pattern pattern = Pattern.compile("\\d{38,44}"); 
 			Matcher matcher = pattern.matcher(result1);
 			
 			if (matcher.find()) {
 				
-				
+				 
 		         MatchResult myResult = matcher.toMatchResult();
 				 int start = myResult.start();
 				 int end = myResult.end();
 				
-				System.out.println("*******************************************************");
-				System.out.println("*******************************************************");
-				String info ="Encontrada uma correspondência no arquivo: "+fileName;
+				String resultCaptured0 = result1.substring(start, end);
+				String resultCaptured = result1.substring(start, end)+";"+"Arquivo Verificado - encontrada uma chave";
+			
+				
+				String info ="Encontrada uma correspondência no arquivo: "+fileName+ " --> "+"LInha "+i;
+				String info1 ="A string capturada foi: "+result1;
+				
 				System.out.println(info);
-				System.out.println("Foi capturado o código"+start+ "--"+end);
+				System.out.println(info1);
+				System.out.println("A chave encontrada foi --> "+resultCaptured0);
+				
 				System.out.println("*******************************************************");
-				System.out.println("*******************************************************");
+				
+				
+				status=false;
+				
+				 
+				
+				if (resultCaptured0.length()<44) {
+					System.out.println("*******************************************************");
+					System.out.println("*******************************************************");
+					info ="Encontrada uma correspondência no arquivo: "+fileName+ " --> "+"LInha "+i;
+					info1 ="A string capturada foi: "+result1;
+					
+					
+					System.out.println(info);
+					System.out.println(info1);
+					System.out.println("A chave encontrada foi --> "+resultCaptured);
+					System.out.println("*******************************************************");
+					System.out.println("Verifique este arquivo...");
+					System.out.println("*******************************************************");
+					
+					resultCaptured = result1.substring(start,end)+";"+"Verifique este arquivo, pode conter uma chave";
+				}
+				
+				keyFinal=resultCaptured;
 			}
 				
 		}
  		
 		
-		/*String chave="\\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4}";
-		
-		String str1="NOTA FISCAL ELETRÔNICA";
-		String str2="CHAVE DE ACESSO";
-		String str3="NF-e";
-		String str4="NFS-e";
-;		
-		 
-	    if (result.contains(str3)) { 
-	    	
-	    	keyFinal="Passível de identificação";
-	    	
-	    	
-	    }
 
-	    if (result.contentEquals(str4)) {
-	    	keyFinal="identificado NFS-e";
-	    }
-	    
-
-		}
-			*/
-			
 			
 	}
 	
