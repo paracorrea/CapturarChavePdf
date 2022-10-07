@@ -24,7 +24,7 @@ import net.sourceforge.tess4j.TesseractException;
 public class GetOcrOfImage {
 
  static String imput = "C:\\folders\\init\\txts\\imgsAndKeys.txt";
- static Path output = Paths.get("C:\\folders\\init\\txts\\finalFile.txt");
+ static Path output = Paths.get("C:\\folders\\init\\txts\\jaguaryLab2022.txt");
  static String nameFinal ="";
  static String keyFinal="";
  static List<String> filesList = new ArrayList<>();
@@ -99,7 +99,8 @@ public class GetOcrOfImage {
 		String fileName=parte1;
 		File image = new File(parte1);
 		Tesseract tesseract = new Tesseract();
-		tesseract.setDatapath("C:\\Users\\fernando.correa\\AppData\\Local\\Tesseract-OCR\\tessdata");
+		// versao windows 2 - trocar eu por fernando.correa
+		tesseract.setDatapath("C:\\Users\\eu\\AppData\\Local\\Tesseract-OCR\\tessdata");
 		tesseract.setLanguage("por");
 		tesseract.setPageSegMode(1);
 		tesseract.setOcrEngineMode(1);
@@ -125,8 +126,8 @@ public class GetOcrOfImage {
 				 int start = myResult.start();
 				 int end = myResult.end();
 				
-				String resultCaptured0 = result1.substring(start, end);
-				String resultCaptured = result1.substring(start, end)+";"+"Arquivo Verificado - encontrada uma chave";
+				
+				String resultCaptured = result1.substring(start, end);
 			
 				
 				String info ="Encontrada uma correspondência no arquivo: "+fileName+ " --> "+"LInha "+i;
@@ -134,7 +135,7 @@ public class GetOcrOfImage {
 				
 				System.out.println(info);
 				System.out.println(info1);
-				System.out.println("A chave encontrada foi --> "+resultCaptured0);
+				System.out.println("A chave encontrada foi --> "+resultCaptured);
 				
 				System.out.println("*******************************************************");
 				
@@ -143,7 +144,7 @@ public class GetOcrOfImage {
 				
 				 
 				
-				if (resultCaptured0.length()<44) {
+				if (resultCaptured.length()<44) {
 					System.out.println("*******************************************************");
 					System.out.println("*******************************************************");
 					info ="Encontrada uma correspondência no arquivo: "+fileName+ " --> "+"LInha "+i;

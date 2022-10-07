@@ -72,7 +72,7 @@ public class ReadFilesWithPdfBox {
 					fileName = br.readLine();
 					nomeDir = fileName.substring(21, 28);
 					
-				}
+				} 
 				
 				// here is verify file really is a file. So get the part of name plus name of folder
 				tamanhoNomeDir = (fileName.length())-4;
