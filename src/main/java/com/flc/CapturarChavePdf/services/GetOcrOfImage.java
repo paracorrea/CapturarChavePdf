@@ -24,10 +24,13 @@ import net.sourceforge.tess4j.TesseractException;
 public class GetOcrOfImage {
 
  static String imput = "C:\\folders\\init\\txts\\imgsAndKeys.txt";
- static Path output = Paths.get("C:\\folders\\init\\txts\\jaguaryLab2022.txt");
+ static Path output = Paths.get("C:\\folders\\init\\txts\\unifaj21e22.txt");
  static String nameFinal ="";
  static String keyFinal="";
  static List<String> filesList = new ArrayList<>();
+ 
+ 
+ 
  static Boolean status=true;
  String[] nomeNovo;	
 	
@@ -53,7 +56,7 @@ public class GetOcrOfImage {
 				String[] partes = linha.split(";");
 				
 				nameFinal=partes[0];
-				
+				keyFinal=partes[1];
 			
 				if (partes[1].contains("00000000000000000000000000000000000000000000") || partes[1].length()<44 ) {
 					
@@ -63,9 +66,9 @@ public class GetOcrOfImage {
 					
 				}
 				
-				if (status) {
-					keyFinal=partes[1];
-				}
+		//		if (status) {
+		//			keyFinal=partes[1];
+		//		}
 				
 				filesList.add(nameFinal+";"+keyFinal);
 				linha = br.readLine();
@@ -111,7 +114,7 @@ public class GetOcrOfImage {
 		//System.out.println(result);
 		
 		String nf[] = result.split("\n");
-		status=true;
+		
 		for ( int i =0; i <nf.length; i++) {
 			String result1 = nf[i].toString().toUpperCase().replaceAll("\\s+","");
 			//System.out.println("LInha: "+i+ ":" +result1+":");
@@ -140,7 +143,7 @@ public class GetOcrOfImage {
 				System.out.println("*******************************************************");
 				
 				
-				status=false;
+				
 				
 				 
 				
@@ -160,7 +163,7 @@ public class GetOcrOfImage {
 					
 					resultCaptured = result1.substring(start,end)+";"+"Verifique este arquivo, pode conter uma chave";
 				}
-				
+				//encontrada correspondencia
 				keyFinal=resultCaptured;
 			}
 				
